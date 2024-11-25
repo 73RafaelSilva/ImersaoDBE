@@ -2,11 +2,14 @@ import {getodosDados,criarPostagem, atualizarPostagem} from "../model/postagensM
 import fs from "fs";
 import gerarDescricaoComGemini from "../services/geminiServices.js";
 
+// Obtém todas as postagens do banco de dados
 export async function pegaPostagens(req, res){
     const postagens = await getodosDados();
     res.status(200).json(postagens);
     console.log("Alguém me acessou e pegou todos os dados");
 };
+
+// Cria uma nova postagem
 export async function guardaPostagem(req,res){
     const novaPostagem = req.body;
     try{
@@ -17,7 +20,9 @@ export async function guardaPostagem(req,res){
         console.log(erro.message);
         res.status(500).json({"erro":"Falha na requisição"});
     }
-}
+};
+
+// Cria uma nova postagem com imagem
 export async function uploadImagem(req,res){
     const novaPostagem = {
         descricao:"",
@@ -35,6 +40,8 @@ export async function uploadImagem(req,res){
         res.status(500).json({"erro":"Falha na requisição"});
     }
 }
+
+// Atualiza uma postagem
 export async function atualizaPostagem(req,res){
     const id = req.params.id;
     const urlImg = `http://localhost:3000/${id}.png`;
